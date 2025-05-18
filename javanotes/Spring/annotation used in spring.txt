@@ -1,0 +1,79 @@
+﻿Spring Annotation
+------------------
+1--> RequestMapping(value="\nameOfMethod",method=RequestMethod.GET)   
+		
+     Package name- org.springframework.web.bind.annotation.RequestMapping
+
+2--> PathVariable("word") String word												
+
+	Package name- org.springframework.web.bind.annotation.PathVariable
+	
+	@RequestMapping(value="/user/{userId}/roles/{roleId}",method = 
+	RequestMethod.GET)
+     public String getLogin(@PathVariable("userId") String userId,
+         @PathVariable("roleId") String roleId){
+
+     }
+	 
+--@PathVariable for accepting the customized or more dynamic parameters in 
+the request paths. You can configure the complete path inside @RequestMapping 
+with the placeholders for the dynamic URIs.	 
+	 
+--@PathVariable is very useful for dynamic URIs.
+
+--There is no limit on the number of parameters used in a single method.
+You can use more than one dynamic parameter in a single method’s parameter.
+
+--This can be used with Map argument. Parameters will be populated to the Map object.
+
+--A @PathVariable argument can be of any simple type such as int, long, Date, etc.
+
+3--> RequestParam
+QueryParam("word") String word		
+
+http://localhost:8080/shop/order/1001/receipts?date=12-05-2017, 
+then you can use the @RequestParam annotation to retrieve the query parameter date and
+ you can use @PathVariable to extract the orderId i.e. "1001" as shown below:
+
+@RequestMapping(value="/order/{orderId}/receipts", method = RequestMethod.GET)
+public List listUsersInvoices( @PathVariable("orderId") int order,
+ @RequestParam(value = "date", required = false) Date dateOrNull) {
+...
+}
+
+The required=false denotes that query parameter can be optional but the URL must have the same URI.
+
+---------------------------------------------------------------------------------------------------------------
+
+Difference between @PathVariable and @RequestParam in Spring?
+--------------------------------------------------------------
+In Spring Framework, @PathVariable and @RequestParam are both annotations used for handling parameters 
+in a web request, but they serve different purposes:
+
+1. @PathVariable:
+   - @PathVariable is used to extract values from the URI template in the URL.
+   - It binds the method parameter to a URI template variable (part of the URL).
+   - Typically used when you want to retrieve data based on a part of the URL path.
+   - For example, in the URL `/users/{id}`, if you want to extract the `id`, you would use `@PathVariable("id")`.
+
+Example:
+@GetMapping("/users/{id}")
+public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
+    // Method logic to fetch user by id
+}
+
+2.@RequestParam:
+   - @RequestParam is used to extract query parameters from the request URL.
+   - It binds the method parameter to a query parameter in the URL.
+   - Typically used when you want to pass optional parameters to a request.
+   - Query parameters are part of the URL following the `?` symbol and are in the form `key=value`.
+   
+Example:
+@GetMapping("/users")
+public ResponseEntity<List<User>> getUsersByRole(@RequestParam("role") String role) {
+    // Method logic to fetch users by role
+}
+
+So, in summary:
+- Use `@PathVariable` when you want to extract values from the URI template.
+- Use `@RequestParam` when you want to extract query parameters from the request URL.

@@ -1,0 +1,24 @@
+In Java, HashMap and WeakHashMap are both implementations of the Map interface, but they have different behaviors, especially in how they handle object references.
+
+HashMap:
+
+HashMap uses strong references to hold its keys. This means that as long as a key is present in the HashMap, 
+it won't be garbage collected even if there are no other references to it.
+It is suitable for most use cases where you want to maintain a mapping of keys to values and you don't want the keys to be garbage collected.
+WeakHashMap:
+
+WeakHashMap uses weak references for its keys. Weak references allow the garbage collector to reclaim the object 
+if there are no strong references to it elsewhere in the program.
+This makes WeakHashMap useful in scenarios where you want to associate some data with objects that are not used elsewhere in the program. 
+For example, in caching scenarios where the keys are temporary and their absence won't affect the program logic.
+Weak references in WeakHashMap allow keys to be garbage collected when there are no other strong references to them. 
+However, this also means that entries in a WeakHashMap may disappear at any time when the garbage collector runs.
+
+TreeMap:
+The Underlying Data Structure is Red -Black Tree.
+Duplicate Keys are Not Allowed. But Values can be Duplicated.
+Insertion Order is Not Preserved and it is Based on Some Sorting Order of Keys.
+If we are depending on Default Natural Sorting Order then the Keys should be Homogeneous
+and Comparable. Otherwise we will get Runtime Exception Saying ClassCastException.
+If we defining Our Own Sorting by Comparator then Keys can be Heterogeneous and Non-
+Comparable.

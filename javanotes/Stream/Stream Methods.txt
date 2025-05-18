@@ -1,0 +1,164 @@
+Methods in Stream:
+-------------------
+--------------
+a. reduce()
+--------------
+The reduce() operation in Java streams is a terminal operation that performs a reduction on the 
+elements of the stream. It combines all elements of the stream into a single result by repeatedly 
+applying a binary operator. The result of the reduction is an Optional because the stream might be empty.
+
+Optional<T> reduce(BinaryOperator<T> accumulator)
+Optional<T> reduce(T identity, BinaryOperator<T> accumulator)
+
+The first variant of reduce() takes only a binary operator as an argument.
+The second variant of reduce() takes an initial value (identity) along with the binary operator.
+
+Example:
+Let's consider an example where we want to find the sum of integers in a list:
+
+public class ReduceExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+        // Using reduce to find the sum of integers
+        int sum = numbers.stream().reduce(0, (a, b) -> a + b);
+
+        System.out.println("Sum of numbers: " + sum);
+    }
+}
+
+How reduce() operation works in Java streams .
+
+Answer: The reduce() operation in Java streams is used to combine all elements of a stream into a 
+single result by repeatedly applying a binary operator. It takes an initial value (identity) and a
+ binary operator as arguments. The binary operator is applied to the elements of the stream from 
+ left to right, producing a cumulative result. The result of the reduction is wrapped in an Optional
+ because the stream might be empty.
+ Here's an example demonstrating the usage of reduce() to find the maximum value in a list of integers:
+
+public class ReduceExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(3, 1, 7, 4, 2);
+
+        // Using reduce to find the maximum value
+        int max = numbers.stream().reduce(Integer.MIN_VALUE, Integer::max);
+
+        System.out.println("Maximum value: " + max);
+    }
+}
+In this example, Integer::max is used as the binary operator to find the maximum value 
+among the elements of the stream. If the stream is empty, the initial value Integer.MIN_VALUE is returned.
+
+Params:
+identity – the identity value for the accumulating function accumulator – an associative, 
+non-interfering, stateless function for combining two values
+Returns:
+the result of the reduction
+API Note:
+Sum, min, max, average, and string concatenation are all special cases of reduction. Summing a stream of numbers can be expressed as:
+ Integer sum = integers.reduce(0, (a, b) -> a+b);
+or:
+ Integer sum = integers.reduce(0, Integer::sum);
+ 
+------------------
+b. iterate()
+------------------
+We can use stream to iterate any number of times. Stream provides
+  predefined methods to deal with the logic you implement.
+  
+In Java streams, there's no direct `iterate()` method. However, there is an `iterate()` method 
+available in the `Stream` interface that generates an infinite sequential ordered stream by 
+repeatedly applying a given function. This method takes two arguments: a seed (the initial value) 
+and a function to apply to the previous element to produce a new element. 
+
+Here's the signature of the `iterate()` method:
+
+static<T> Stream<T> iterate(T seed, UnaryOperator<T> f)
+
+- `seed`: The initial value.
+- `f`: The function to apply to the previous element to produce a new element.
+
+Here's a simple example of using `iterate()` to generate an infinite stream of numbers:
+
+import java.util.stream.Stream;
+
+public class IterateExample {
+    public static void main(String[] args) {
+        // Generate an infinite stream of numbers starting from 1 and doubling each time
+        Stream<Integer> numbers = Stream.iterate(1, n -> n * 2);
+
+        // Print the first 10 elements of the stream
+        numbers.limit(10).forEach(System.out::println);
+    }
+}
+
+We then limit the stream to the first 10 elements using the limit() method and print them using forEach(). 
+
+------------------
+c. map()
+------------------
+In Java, the `map` method in streams is used to transform each element of the stream using a given function.
+ It takes a `Function` as an argument, which represents the transformation to be applied to each element.
+ The `map` method then produces a new stream consisting of the results of applying the given 
+ function to each element of the original stream.
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("John", "Alice", "Bob", "David");
+
+        // Convert each name to uppercase using map
+        List<String> uppercaseNames = names.stream()
+                                          .map(String::toUpperCase)
+                                          .collect(Collectors.toList());
+
+        System.out.println(uppercaseNames); // Output: [JOHN, ALICE, BOB, DAVID]
+    }
+}
+
+In this example, we have a list of names. We use the `map` method to transform each name 
+to uppercase using the `String::toUpperCase` method reference. Finally, we collect the transformed 
+names into a new list using `collect(Collectors.toList())`.
+
+------------------
+d. flatmap
+------------------
+
+In Java, the `flatMap()` method in the `Stream` class is a powerful tool for transforming 
+and flattening streams of elements. It's particularly useful when you have a stream of elements, 
+each of which contains another stream, and you want to process all the elements of those nested 
+streams as if they were part of the original stream.
+
+The `flatMap()` method takes a `Function` as an argument, which maps each element of the original 
+stream to a new stream. It then flattens these streams into a single stream of elements. 
+Here's the signature of the `flatMap()` method:
+
+<R> Stream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)
+
+Let's break down the components:
+
+- `Function<? super T, ? extends Stream<? extends R>> mapper`: 
+This function takes an element of type `T` from the original stream and returns a 
+stream of elements of type `R`. The `flatMap()` method then flattens all these streams 
+into a single stream of elements of type `R`.
+
+
+Suppose you have a list of lists of integers, and you want to flatten it into a single list of integers:
+
+List<List<Integer>> listOfLists = Arrays.asList(
+    Arrays.asList(1, 2, 3),
+    Arrays.asList(4, 5, 6),
+    Arrays.asList(7, 8, 9)
+);
+
+List<Integer> flattenedList = listOfLists.stream()
+    .flatMap(List::stream) // flattening each inner list into a single stream
+    .collect(Collectors.toList());
+
+System.out.println(flattenedList); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+In this example, `flatMap()` is used to flatten each inner list into a single stream of integers. 
+Then, `collect(Collectors.toList())` is used to collect all the elements of the flattened stream into a list.
+
+`flatMap()` is also commonly used when dealing with streams of optional values or streams of arrays/maps. 
+It allows you to effectively handle nested structures and transform them into a flat stream.

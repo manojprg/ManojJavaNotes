@@ -1,0 +1,53 @@
+The CAP theorem, also known as Brewer's theorem, is a principle that applies to distributed database systems. 
+It states that it is impossible for a distributed data store to simultaneously provide all three of the 
+following guarantees:
+
+1.Consistency: Every read receives the most recent write or an error. In other words, all nodes in the system 
+return the same data at the same time.
+2.Availability: Every request receives a (non-error) response, without the guarantee that it contains the most 
+recent write. This means the system is operational 100% of the time.
+3.Partition Tolerance: The system continues to operate despite an arbitrary number of messages being dropped or 
+delayed by the network between nodes. This ensures that the system can handle network failures that split the 
+network into partitions.
+
+According to the theorem, a distributed system can only provide two of the three guarantees at the same time:
+
+- **CA (Consistency and Availability)**: Systems that are consistent and available cannot provide partition tolerance. 
+If a network partition occurs, the system must sacrifice either consistency or availability.
+- **CP (Consistency and Partition Tolerance)**: Systems that are consistent and partition-tolerant cannot provide availability. 
+During a network partition, these systems will sacrifice availability to maintain consistency.
+- **AP (Availability and Partition Tolerance)**: Systems that are available and partition-tolerant cannot provide consistency. 
+During a network partition, these systems will return potentially stale data to maintain availability.
+
+### Practical Implications
+In practical terms, the CAP theorem guides the design and trade-offs of distributed systems. Depending on the requirements and 
+the nature of the application, developers must choose which two of the three properties to prioritize:
+
+- **CA Systems**: Typically used in scenarios where network partitions are rare or controlled, and where the system can afford 
+to be unavailable in the event of a partition to ensure data consistency.
+- **CP Systems**: Suitable for applications where consistency is critical, such as banking systems, and where the system can 
+tolerate being unavailable during network issues.
+- **AP Systems**: Used in scenarios where availability is critical, such as web services or online retail, and where the system 
+can tolerate returning slightly outdated information during network partitions.
+
+The CAP theorem helps in understanding the fundamental limitations and making informed decisions about architecture and 
+design in distributed computing environments.
+
+Real-world distributed systems
+In a distributed system, partitions cannot be avoided, and when a partition occurs, we must
+choose between consistency and availability. In Figure 6-3, n3 goes down and cannot
+communicate with n1 and n2. If clients write data to n1 or n2, data cannot be propagated to
+n3. If data is written to n3 but not propagated to n1 and n2 yet, n1 and n2 would have stale
+data
+If we choose consistency over availability (CP system), we must block all write operations to
+n1 and n2 to avoid data inconsistency among these three servers, which makes the system
+unavailable. Bank systems usually have extremely high consistent requirements. For
+example, it is crucial for a bank system to display the most up-to-date balance info. If
+inconsistency occurs due to a network partition, the bank system returns an error before the
+inconsistency is resolved.
+However, if we choose availability over consistency (AP system), the system keeps accepting
+reads, even though it might return stale data. For writes, n1 and n2 will keep accepting writes,
+and data will be synced to n3 when the network partition is resolved.
+Choosing the right CAP guarantees that fit your use case is an important step in building a
+distributed key-value store. You can discuss this with your interviewer and design the system
+accordingly.

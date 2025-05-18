@@ -1,0 +1,39 @@
+In Java, PriorityQueue is a class that implements the Queue interface and provides a priority queue data structure. 
+It orders elements according to their natural ordering (if they implement Comparable) or by a Comparator provided at queue construction time.
+
+Ordering: Elements are ordered based on their priority. When elements are added to the priority queue, 
+they are ordered according to the comparator or natural ordering.
+
+Priority Handling: The element with the highest priority (according to the specified ordering) will be removed 
+first when calling methods like poll() or remove().
+
+Efficiency: PriorityQueue is implemented as a priority heap, which allows for efficient 
+addition and removal of elements with logarithmic time complexity.
+
+Null Elements: PriorityQueue does not allow null elements.
+
+Iteration Order: The iteration order of elements in a PriorityQueue is not specified and may change if the queue's structure is modified.
+
+Here's a simple example demonstrating the usage of PriorityQueue:
+
+java
+Copy code
+import java.util.PriorityQueue;
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a priority queue with integer elements
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        // Add elements to the priority queue
+        pq.add(5);
+        pq.add(3);
+        pq.add(8);
+        pq.add(1);
+
+        // Print and remove elements from the priority queue
+        while (!pq.isEmpty()) {
+            System.out.println(pq.poll()); // Outputs: 1, 3, 5, 8
+        }
+    }
+}

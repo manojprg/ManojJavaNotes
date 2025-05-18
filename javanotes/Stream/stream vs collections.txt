@@ -1,0 +1,103 @@
+Collections vs Streams: Youtube url: https://www.javaguides.net/2021/12/collections-vs-streams-in-java.html
+
+Collections are used to store and group the data in a particular data structure like List, Set, or Map. 
+Whereas Streams are used to perform complex data processing operations like filtering, matching, mapping, 
+etc on stored data such as arrays, collections, or I/O resources.
+
+That means, collections are mainly about data and streams are mainly about operations on data.
+
+Example 1: List collection is used to store data
+  // Creating an ArrayList of String using
+     List<String> fruits = new ArrayList<>();
+     // Adding new elements to the ArrayList
+     fruits.add("Banana");
+     fruits.add("Apple");
+     fruits.add("mango");
+     fruits.add("orange");
+Example 2: Streams are used to perform operations like filtering, mapping, collection result, etc:
+List<String> lines = Arrays.asList("java", "c", "python");
+
+        List<String> result = lines.stream()       // convert list to stream
+                .filter(line -> !"c".equals(line)) // we dont like c
+                .collect(Collectors.toList());     // collect the output and convert streams to a List
+
+        result.forEach(System.out::println);  
+
+Modification:
+----------------
+ You can add or remove elements from collections. But, you can’t add to or remove elements from streams. 
+Stream consumes a source, performs operations on it, and returns a result. They don’t modify even the source also.
+
+For example:
+        // Creating an ArrayList of String using
+        List < String > fruits = new ArrayList < > ();
+        // Adding new elements to the ArrayList
+        fruits.add("Banana");
+        fruits.add("Apple");
+        fruits.add("Mango");
+        fruits.add("Orange");
+        fruits.add("Pineapple");
+        fruits.add("Grapes");
+
+        System.out.println(fruits);
+
+        // Remove the element at index `5`
+        fruits.remove(5);
+        System.out.println("After remove(5): " + fruits);
+In Streams, there are no such methods to add or remove elements.
+
+Iteration :
+-------------------
+Streams perform iteration internally behind the scene for us (using the forEach() method). 
+We just have to mention the operations to be performed on a source. On the other hand, we have to do the iteration 
+externally over collections using loops.
+
+Example 1: External iterations of Collections using for loops
+// Creating an ArrayList of String using
+List < String > fruits = new ArrayList < > ();
+// Adding new elements to the ArrayList
+fruits.add("Banana");
+fruits.add("Apple");
+fruits.add("mango");
+fruits.add("orange");
+fruits.add("Watermelon");
+fruits.add("Strawberry");
+
+System.out.println("\n=== Iterate using for loop with index ===");
+for (int i = 0; i < fruits.size(); i++) {
+    System.out.println(fruits.get(i));
+}
+
+System.out.println("=== Iterate using Java 8 forEach and lambda ===");
+fruits.forEach(fruit - > {
+    System.out.println(fruit);
+});
+Example 2: Internal iteration of Streams. No more for loops:
+List<String> lines = Arrays.asList("java", "c", "python");
+
+        List<String> result = lines.stream()       // convert list to stream
+                .filter(line -> !"c".equals(line)) // we dont like c
+                .collect(Collectors.toList());     // collect the output and convert streams to a List
+
+        result.forEach(System.out::println);  
+
+Traversability:
+--------------------
+Streams are traversable only once. If you traverse the stream once, it is said to be consumed. 
+To traverse it again, you have to get a new stream from the source again. But, collections can be traversed multiple times.
+List<Integer> numbers = Arrays.asList(4, 2, 8, 9, 5, 6, 7);
+         
+Stream<Integer> numbersGreaterThan5 = numbers.stream().filter(i -> i > 5);
+         
+//Traversing numbersGreaterThan5 stream first time
+         
+numbersGreaterThan5.forEach(System.out::println);
+         
+//Second time traversal will throw error
+         
+//Error : stream has already been operated upon or closed
+         
+numbersGreaterThan5.forEach(System.out::println);
+
+Construction :Collections are eagerly constructed i.e. all the elements are computed at the beginning itself. 
+But, streams are lazily constructed i.e. intermediate operations are not evaluated until the terminal operation is invoked.

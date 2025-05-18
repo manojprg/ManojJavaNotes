@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f049bd15-a9d8-4735-b276-c34b2bae2fc6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Hotel/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Hotel/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Hotel/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Hotel/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Hotel/Hotel.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../src/streams/GeneralPractice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Java 8 features/Consumer vs BiConsumer interface.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Java 8 features/Functional Interfaces.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Java 8 features/Lambda expression basics.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Java 8 features/Streams detailed theory.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Java 8 features/convert List to Map - java 8.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Java 8 features/forEach.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Java 8 features/java 8 interview question.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../javanotes/Java 8 features/java 8 interview question.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Java 8 features/map() vs flatMap().txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Master+Microservices+with+SpringBoot,Docker,Kubernetes.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/REST/How to send multiple responses in rest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../javanotes/REST/How to send multiple responses in rest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Spring/Transaction isolation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../javanotes/Spring/Transaction isolation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/Spring/annotation used in spring and jersey.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/system design interview insiders guide.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/system design interview.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../javanotes/video link for topic.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../javanotes/video link for topic.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2mf6BI7lS5JMNfbZTjlihgn8Ccc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/MANOJ SHARMA/OneDrive/Desktop/New folder",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "MavenSettings"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f049bd15-a9d8-4735-b276-c34b2bae2fc6" name="Changes" comment="" />
+      <created>1727455146832</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727455146832</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

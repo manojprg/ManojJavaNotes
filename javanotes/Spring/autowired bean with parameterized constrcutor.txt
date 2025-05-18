@@ -1,0 +1,213 @@
+I am not able to autowire a bean while passing values in paramterized constructor.
+
+How to call the parameterized constructor using SpringBoot?
+
+@Component
+public class MainClass {
+
+    public void someTask() {
+        AnotherClass obj = new AnotherClass(1, 2);
+    }
+
+}
+//Replace the new AnotherClass(1, 2) using Autowire?
+
+@Component
+public class AnotherClass {
+    private int number,age;
+
+    public AnotherClass(int number, int age) {
+        super();
+        this.number = number;
+        this.age = age;
+    }
+}
+
+===========================
+Answer:
+===========================
+
+You need to specify this bean in the constructor:
+
+@Component
+public class MainClass {
+
+    private final AnotherClass anotherClass;
+
+    // this annotation is NOT required if there is only 1 constructor, shown for clarity.
+    @Autowired
+    MainClass(AnotherClass anotherClass) {
+        this.anotherClass = anotherClass;
+    }
+    public void someTask() {
+        // anotherClass is already instantiated by the time you get here.
+    }
+
+
+}
+Option 1: Directly allow AnotherClass to be created with a component scan.
+
+Now, in order for Spring to be able to construct AnotherClass as a bean, you need to 
+tell it in a 'Spring way' about where it gets it's values from:
+
+@Component
+public class AnotherClass {
+    private final int number,age;
+
+    // also not needed if this is the only constructor.
+    @Autowired
+    public AnotherClass(
+// @Value is a spring annotation to provide spring the value it needs for this parameter.
+                        @Value("${property.number:0}") int number, 
+                        @Value("${property.age:0}") int age) {
+        this.number = number;
+        this.age = age;
+    }
+}
+What this is doing, is pulling 2 properties, property.number and property.age from application.properties
+|application.yml for the value(s) of those integers.
+
+You will need to ensure both of these classes are on the component scan path, or else spring boot won't 
+attempt to make beans of these classes.
+
+Option 2: Use a Configuration Class to make the AnotherClass bean
+
+@Configuration
+public class MyConfigurationClass {
+
+    @Bean
+    public AnotherClass anotherClass {
+        return new AnotherClass(1,2)
+    }
+}
+In this example, you would not annotate AnotherClass with @Component.
+
+Option 3: Use a custom factory method as found in this blog.
+
+Again, with this strategy, do not annotate AnotherClass with @Component
+
+@Configuration
+public class MyConfigurationClass {
+
+    @Bean
+    public BiFunction<Integer, Integer, MyPrototype> myPrototypeFactory() {
+        return start, age -> anotherClass(start, age);
+    }
+
+    @Bean
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public AnotherClass anotherClass(Integer start, Integer age) {
+        if (start == null || age == null) {
+            throw new IllegalArgumentException("start was: " + start + ", age was: " + age + ". Neither can be null!");
+        }
+        return new AnotherClass(start,age);
+    }
+}
+Usage:
+
+@Component
+public class MainClass {
+
+    private final BiFunction<Integer, Integer, AnotherClass> anotherClassFactory;
+
+    // this annotation is NOT required if there is only 1 constructor, shown for clarity.
+    @Autowired
+    MainClass(BiFunction<Integer, Integer, AnotherClass> anotherClassFactory) {
+        this.anotherClassFactory = anotherClassFactory;
+    }
+    public void someTask() {
+        AnotherClass ac = anotherClassFactory.apply(1,2);
+        // do something with your new AnotherClass
+    }
+
+}
+Option 4: Use ObjectProvider (Since Spring 4.3) as found in this blog post.
+
+Again, with this strategy, do not annotate AnotherClass with @Component
+
+@Configuration
+public class MyConfiguration {
+    @Bean
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public AnotherClass createAnotherClass(Integer start, Integer age) {
+        return new AnotherClass(start, age);
+    }
+}
+Usage:
+
+@Component
+public class MainClass {
+
+    private final ObjectProvider<AnotherClass> anotherClassProvider;
+
+    // this annotation is NOT required if there is only 1 constructor, shown for clarity.
+    @Autowired
+    MainClass(ObjectProvider<AnotherClass> anotherClassProvider) {
+        this.anotherClassProvider = anotherClassProvider;
+    }
+    public void someTask() {
+        // may need to cast the result of '.getObject()'
+        AnotherClass ac = anotherClassProvider.getObject(/*start*/ 1, /*age*/ 2);
+        // do something with your new AnotherClass
+    }
+
+}
+
+ObjectProvider is an interface in Spring Framework that provides a way to obtain instances of beans at runtime, 
+allowing for deferred dependency injection. It is useful when you need to obtain a bean in a lazy or conditional way, 
+or when you need to obtain multiple instances of a bean.
+
+Here's an example of how to use ObjectProvider in Spring:
+
+@Component
+public class MyClass {
+    private final ObjectProvider<MyDependency> myDependencyProvider;
+
+    public MyClass(ObjectProvider<MyDependency> myDependencyProvider) {
+        this.myDependencyProvider = myDependencyProvider;
+    }
+
+    public void doSomething() {
+        MyDependency myDependency = myDependencyProvider.getObject();
+        // use myDependency instance
+    }
+}
+
+@Component
+public class MyDependency {
+    // class methods
+}
+In this example, MyClass has a constructor that takes an ObjectProvider<MyDependency> as a parameter. 
+When the doSomething() method is called, the getObject() method is called on the myDependencyProvider 
+to obtain an instance of MyDependency.
+
+ObjectProvider can also be used to obtain multiple instances of a bean. Here's an example:
+
+@Component
+public class MyClass {
+    private final ObjectProvider<MyDependency> myDependencyProvider;
+
+    public MyClass(ObjectProvider<MyDependency> myDependencyProvider) {
+        this.myDependencyProvider = myDependencyProvider;
+    }
+
+    public void doSomething() {
+        StreamSupport.stream(myDependencyProvider.spliterator(), false)
+            .forEach(myDependency -> {
+                // use myDependency instance
+            });
+    }
+}
+
+@Component
+public class MyDependency {
+    // class methods
+}
+In this example, the getObject() method is not called directly on the ObjectProvider. 
+Instead, the spliterator() method is called to obtain a Spliterator over the instances of MyDependency. 
+The StreamSupport.stream() method is then used to create a stream from the Spliterator, and the forEach()
+ method is called on the stream to iterate over the instances and use them.
+
+ObjectProvider is a useful interface in Spring when you need to obtain instances of beans at runtime, 
+and it allows for greater flexibility in the way that dependencies are injected
+

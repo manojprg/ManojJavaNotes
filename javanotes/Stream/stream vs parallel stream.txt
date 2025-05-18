@@ -1,0 +1,76 @@
+The Stream API brought a new programming paradigm to Java: a declarative way of processing data 
+using streams—expressing what should be done to the values and not how it should be done. 
+More importantly, the API allows you to harness the power of multicore architectures for the 
+parallel processing of data. There are two kinds of streams.
+
+A sequential stream is one whose elements are processed sequentially (as in a for loop) 
+when the stream pipeline is executed by a single thread.
+
+A parallel stream is split into multiple substreams that are processed in parallel by multiple instances
+ of the stream pipeline being executed by multiple threads, and their intermediate results are combined to 
+ create the final result.
+A parallel stream can be created only directly on a collection by invoking the Collection.parallelStream() method.
+
+The sequential or parallel mode of an existing stream can be modified by calling the BaseStream.sequential() a
+nd BaseStream.parallel() intermediate operations, respectively. A stream is executed sequentially or 
+in parallel depending on the execution mode of the stream on which the terminal operation is initiated.
+
+The Stream API makes it possible to execute a sequential stream in parallel without rewriting the code. 
+The primary reason for using parallel streams is to improve performance while at the same time ensuring 
+that the results obtained are the same, or at least compatible, regardless of the mode of execution. 
+Although the API goes a long way toward achieving its aim, it is important to understand the pitfalls 
+to avoid when executing stream pipelines in parallel.
+
+Using parallel streams
+-------------------------
+Building parallel streams. The execution mode of an existing stream can be set to parallel by calling 
+the parallel() method on the stream. 
+
+The isParallel() method of the stream interfaces can be used to determine whether the execution mode of a stream is parallel.
+
+Executing parallel streams. The Stream API allows a stream to be executed either sequentially or 
+in parallel—meaning that all stream operations can execute either sequentially or in parallel. 
+A sequential stream is executed in a single thread running on one CPU core. The elements in the stream are processed
+ sequentially in a single pass by the stream operations that are executed in the same thread.
+
+A parallel stream is executed by different threads, running on multiple CPU cores in a computer. 
+The stream elements are split into substreams that are processed by multiple instances of the 
+stream pipeline being executed in multiple threads. The partial results from the processing of 
+each substream are merged (or combined) into a final result.
+
+Parallel streams utilize the fork/join framework for executing parallel tasks. This framework provides 
+support for the thread management necessary to execute the substreams in parallel. The number of threads 
+employed during parallel stream execution is dependent on the CPU cores in the computer.
+
+Factors affecting performance
+----------------------------------
+There are no guarantees that executing a stream in parallel will improve performance. This section looks 
+at some factors that can affect performance.
+
+In general, increasing the number of CPU cores and, thereby, the number of threads that can execute in parallel 
+scales performance only up to a threshold for a given size of data, as some threads might become idle if there 
+is no data left for them to process. The number of CPU cores boosts performance to a certain extent, but it is 
+not the only factor that should be considered when deciding whether to execute a stream in parallel.
+
+Inherent in the total cost of parallel processing is the startup cost of setting up the parallel execution. At the onset, 
+if this cost is already comparable to the cost of sequential execution, not much can be gained by resorting to parallel execution.
+
+A combination of the following three factors can be crucial in deciding whether a stream should be executed in parallel:
+-----------------------------------------------------------------------------------------------------------------------
+a. Sufficiently large data size. The size of the stream must be sufficiently large enough to warrant parallel processing; 
+otherwise, sequential processing is preferable. The startup cost can be too prohibitive for parallel execution 
+if the stream size is too small.
+
+b. Computation-intensive stream operations. If the stream operations are small computations, the stream size should be 
+proportionately large to warrant parallel execution. If the stream operations are computation-intensive, the stream 
+size is less significant, and parallel execution can boost performance.
+
+c. Easily splitable stream. If the cost of splitting the stream into substreams is higher than the cost of processing 
+the substreams, employing parallel execution can be futile. A collection such as an ArrayList, a HashMap, or 
+a simple array are efficiently splitable, whereas a LinkedList or I/O-based datasources are least efficient in this regard.
+
+Benchmarking is recommended
+-----------------------------
+Benchmarking—that is, measuring performance—is strongly recommended before deciding whether parallel execution 
+will be beneficial. Listing 1 illustrates a simple program that reads the system clock before and after a stream 
+is executed; it can be used to get a sense of how well a stream performs.

@@ -1,0 +1,155 @@
+What is CORS?
+CORS helps to ensure that only authorized domains can access sensitive data or resources, 
+and that web applications are not vulnerable to cross-site scripting (XSS) attacks or other types of security 
+vulnerabilities by allowing web developers to explicitly allow or block cross-origin requests. 
+It also allows webpages to make explicit cross-origin requests for resources while preventing u
+nauthorized access to other resources.
+
+Before CORS, webpages could only make requests to the same domain that served the web page, 
+a practice known as the “same-origin policy.” This policy was implemented to prevent malicious 
+websites from sending unauthorized requests to other domains, which could expose sensitive data 
+or compromise security.
+
+However, as the web evolved and web applications became more complex, so did the requirement 
+for webpages to be able to make requests to external domains. Web applications, for example, 
+may need to access APIs or other data sources hosted on different domains, or they may need to 
+include external domain resources such as images or stylesheets.
+
+CORS was created to address this need while still maintaining web security. 
+It allows web developers to specify which domains are allowed to access their resources, 
+as well as control the types of requests that can be made and the types of data that can be returned.
+
+What are CORS Errors?
+CORS errors happen when a webpage makes a request to a different domain than the one that served the page, 
+and the server responds with an HTTP error because the “Origin” header in the request is not allowed by the 
+server’s CORS configuration.
+
+Error: Access to XMLHttpRequest blocked by CORS policy
+
+The Reason for CORS:
+---------------------
+We discussed what a CORS error is and how it works, but to fully understand it, let’s use a simple analogy.
+
+Consider that both you and your friend have websites. Your website represents one domain on the internet, 
+while your friend’s website represents another. To keep your websites distinct and secure, \
+there are regulations in place that restrict your website’s access to resources (such as photos or data) 
+outside of your domain. This is similar to the “same-origin policy” in web browsers, which only permits webpages 
+to access resources from the same domain from which the page was served.
+
+Imagine that you wish to include an image from a friend’s website on your own. You wish you could use the image, 
+but you cannot since it is private property and you lack permission to do so. This is analogous to a webpage attempting 
+to access a resource from a domain other than the one that delivered the webpage but being unable to do so due to the same-origin policy.
+
+Illustration of two computers. my-website.com sends request to my-friend.com, which has a green checkmark. 
+The returned response has a red X.
+
+To solve this issue, your friend could permit you to use the image under certain conditions. For instance, 
+they may enable you to use the image if you first ask for approval and use it for a specific reason.
+
+Illustration of two computers. my-website.com sends request to my-friend.com, which has a green checkmark. 
+The my-friend computer has one arrow pointing to access-control-allow-origin: my-website.com, and another 
+arrow pointing back to my-website labeled response, and this time it has a green checkmark
+
+This is similar to CORS, which enables web developers to declare which domains are permitted to access their resources, 
+as well as to regulate the types of requests that can be performed and the types of data returned. By permitting 
+you to use the image as long as you adhere to the regulations, your friend can continue to enjoy the privacy of 
+their property (the image) while enabling you to use it on your website.
+
+How to Solve CORS Errors?
+----------------------------
+There are several ways to solve CORS errors, depending on the cause of the error and the specific requirements 
+of your application. Here are some common approaches:
+
+Allow Cross-Origin Requests on Server
+--------------------------------------
+If the server is blocking the request because the server’s CORS configuration does not allow the “Origin” header, 
+you can configure the server to allow the request by adding the domain of the web page that requested the list of 
+allowed origins, or by setting the Access-Control-Allow-Origin header to “*” to allow any domain to access the resource.
+
+The Access-Control-Allow-Origin header is an HTTP response header that is used in the case of CORS (Cross-Origin Resource Sharing). 
+It specifies which domain is permitted to access the resource in the response.
+
+When a webpage requests a different domain, the browser sends an HTTP request with an “Origin” header that indicates 
+the domain of the webpage that made the request. Based on the value of the “Origin” header, the server can either 
+allow or deny the request. If the server accepts the request, it sends an HTTP response with an Access-Control-Allow-Origin 
+header indicating the domain that is permitted to access the resource.
+
+For our previous example, our page “https://my-website.com” requests our friend’s page “https://my-friend.com”, 
+the server at “https://my-friend.com” could send the following response:
+
+Access-Control-Allow-Origin: https://my-website.com
+-----------------------------------------------------
+This allows our “https://my-website.com” page to access the resource but prevents any other domain from doing so.
+
+The Access-Control-Allow-Origin header can also be set to “*” to allow access to the resource from any domain. 
+However, use with caution because it may expose sensitive data or resources to unauthorized domains.
+
+Allow Some HTTP Methods
+-----------------------------
+When updating your CORS configuration, you must use the “Access-Control-Allow-Methods” header in 
+your server’s HTTP responses to allow the necessary HTTP methods. This header indicates which HTTP 
+methods are permitted in cross-origin requests.
+
+To allow the GET and POST methods, for example, include the following header in your server’s HTTP responses:
+
+Access-Control-Allow-Methods: GET, POST
+You can also use the “*” value to permit all HTTP methods, but this should be done with caution because 
+it could expose your server to security vulnerabilities.
+
+You may also need to update your server’s CORS configuration to allow the necessary HTTP headers in addition 
+to specifying the allowed methods. This is accomplished through the use of the “Access-Control-Allow-Headers” 
+header, which specifies which HTTP headers are permitted in cross-origin requests.
+
+Access-Control-Allow-Headers: Content-Type, Authorization
+Conclusion
+Overall, CORS is an important security feature that helps to ensure the safety and security of the web, 
+and is essential for modern web applications that make cross-origin requests.
+
+How to fix this in Springboot:
+----------------------------------
+1. We can use @Cross-Origin annotation on RestController and also define the method alloed into this.
+
+2. This is a global configuration
+package com.example.demo.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class SecurityConfiguration {
+
+    @Value("${cors.allowedMethods}")
+    private String allowedMethods;
+
+    @Value("${cors.allowedHeaders}")
+    private String allowedHeaders;
+
+    @Value("${cors.corsConfiguration}")
+    private String corsConfiguration;
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer(){
+        return new WebMvcConfigurer(){
+           public void addCorsMappings(final CorsRegistry registry){
+               registry.addMapping(corsConfiguration).allowedHeaders(allowedHeaders).allowedMethods(allowedMethods);
+            }
+        };
+    }
+}
+
+3. If we are using spring security jar in our pom.xml then 2nd approach won't work.
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable();
+    }
+}
+Add the @EnableWebSecurity annotation to your Spring Boot configuration class. This will enable Spring Security in your application.
+Create a new class that extends WebSecurityConfigurerAdapter. This class will be used to configure Spring Security.
+In the configure(HttpSecurity http) method, add the following code:

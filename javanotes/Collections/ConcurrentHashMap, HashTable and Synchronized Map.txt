@@ -1,0 +1,21 @@
+ConcurrentHashMap	                                           SynchronizedMap	                   			HashTable
+---------------------------------------------------------------------------------------------------------------------------
+We will get thread safety without locking the 		We will get thread safety    					 We will get thread safety by 
+total map object just with a bucket level lock.		by locking the whole map object. 				locking the whole map object
+
+At a time multiple threads are allowed 				At a time only one thread is allowed 			At a time one thread is allowed to
+to operate on map objects safely.					to perform any operation on a map object.		operate on a map object.
+									 
+Read operation can be performed without lock 		Every read and write operations					Every read and write operations
+but write operation can be performed with 				required total map object 						required total map object 
+bucket level lock.	 				
+		 
+While one thread iterating map objects the 			While one thread iterating map object the		While one thread iterating map object the
+other thread is allowed to modify the map 			other threads are not allowed to modify			other threads are not allowed to modify the map
+and won’t get ConcurrentModificationException.		the map otherwise we will get 					otherwise we will get ConcurrentModificationException
+														ConcurrentModificationException
+
+Iterator of ConcurrentHashMap is fail-safe 			Iterator of SynchronizedMap is fail-fast and	Iterator of HashTable is fail-fast and it will raise
+and won’t raise ConcurrentModificationException		it will raise ConcurrentModificationException	 ConcurrentModificationException
+
+Null is not allowed for both keys and values.		Null is allowed for both keys and values		 Null is not allowed for both keys and values.

@@ -1,0 +1,36 @@
+CSRF stands for Cross-Site Request Forgery. It's a type of attack where a malicious website tricks a user's browser
+ into making unintended requests to a different website where the user is authenticated. 
+ The attacker aims to perform actions on behalf of the victim without their consent or knowledge.
+
+Here's how a CSRF attack typically works:
+
+1. The victim visits a malicious website while authenticated to a legitimate website 
+(such as an online banking site, social media platform, or webmail service). The malicious website contains hidden 
+code or scripts that generate requests to the legitimate website.
+
+2. When the victim visits the malicious site, their browser automatically sends requests (e.g., to transfer money, 
+change account settings, etc.) to the legitimate site without their knowledge.
+
+3. Since the victim is already authenticated to the legitimate site (e.g., via cookies), the site may mistakenly 
+interpret these requests as legitimate actions initiated by the user.
+
+To prevent CSRF attacks, web developers can implement various security measures:
+
+1. **CSRF Tokens**: Include unique tokens in each form or request that only the server knows how to validate. 
+These tokens are typically included in forms or headers and must be sent with each request. The server validates 
+the token to ensure that the request originated from the intended source.
+
+2. **SameSite Cookies**: Set the `SameSite` attribute on cookies to restrict when they are sent. By setting cookies as 
+`SameSite=Strict` or `SameSite=Lax`, you can prevent them from being sent in cross-origin requests, thus mitigating CSRF attacks.
+
+3. **Origin Headers**: Verify the `Origin` header on incoming requests to ensure they originate from an expected domain. 
+This helps prevent requests from unexpected sources.
+
+4. **Custom Headers**: Include custom headers in requests and validate them on the server side. Since browsers automatically 
+include certain headers in cross-origin requests, including custom headers can help differentiate between legitimate and forged requests.
+
+5. **Referrer Policy**: Set a strict referrer policy to control which URLs are included in the `Referer` header of outgoing requests. 
+This can help prevent leakage of sensitive information to malicious sites.
+
+By implementing these security measures, web developers can significantly reduce the risk of CSRF attacks and protect users' 
+sensitive data and actions on their websites.

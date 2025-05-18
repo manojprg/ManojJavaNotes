@@ -1,0 +1,27 @@
+Consistent hashing:  https://www.youtube.com/watch?v=oKAU6LaYFhw
+
+reference: https://www.toptal.com/big-data/consistent-hashing
+
+
+normalization : https://www.youtube.com/watch?v=5GDTIUVlHB8&t=64
+
+stream practical: https://www.youtube.com/watch?v=VOFbMhy27Io&list=PLmCsXDGbJHdj6zCOUKTkOEdqn5FUh34xX&index=82
+
+Spring Boot Password Encryption using Jasypt : https://www.youtube.com/watch?v=Ll-Cz6h8s6I
+
+Most asked interview question: 
+https://www.youtube.com/playlist?list=PLyHJZXNdCXscoyL5XEZoHHZ86_6h3GWE1
+https://www.youtube.com/playlist?list=PLyHJZXNdCXsexOO1VQ4vs-BM2-8CKrixd
+https://www.youtube.com/playlist?list=PLyHJZXNdCXsdC-p2186C6NO4FpadnCC_q
+https://www.youtube.com/playlist?list=PLyHJZXNdCXse86eLuwy5uZohd_bddE9Ni
+Java 8 coding Interview Questions & Answer - https://www.youtube.com/watch?v=PMhrMDHFFW4&list=PLyHJZXNdCXsfcMboYwGoL6wKAFPxljz5W
+ MOST ASKED DESIGN PATTERN INTERVIEW QUESTIONS : https://www.youtube.com/watch?v=JFvSCobD7JU
+													https://www.youtube.com/watch?v=QfnZGam76kE
+
+Saga Design pattern Spring Boot Microservices Interview Questions and Answers : https://www.youtube.com/watch?v=Fe_qPM81hJ8
+Transaction Management in hibernate in spring boot Interview questions | with Example : https://www.youtube.com/watch?v=b7Pev6i8fso
+																				 part 2 https://www.youtube.com/watch?v=GqpQ3J40Op8
+Oauth2 JWT Interview Questions and Answers | Grant types, Scope, Access Token, Claims  : https://www.youtube.com/watch?v=udTU4kmii8A
+Serialization Deserialization & Externalization | Java Interview Questions and Answer : https://www.youtube.com/watch?v=nUFoDfGl1II
+													
+Collections vs Streams: Youtube url: https://www.javaguides.net/2021/12/collections-vs-streams-in-java.html

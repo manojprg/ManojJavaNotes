@@ -1,0 +1,185 @@
+Microservices:
+
+Q1- Why we need Microservices / drawbacks of monolithic architecture?
+1. monolithic architecture application are large and complex in size.
+2. It blocks quick development because of size of application
+3. It blocks continuous development.
+4. It is unscalable. We can't scale any single component, we have to create the instance for entire application.
+5. Change in any  particular component needs to stop entire application.
+
+Microservice: It is an architectural style that structures an application as an collection of small autonomous services, modelled around business domain.
+In this architecture, each service is self contained and single business capability.
+
+Features of Microservices:
+1. small focused: 
+2. Loosely coupled
+3. Language neutral
+
+Q2- how services communicate with each other in microservice?
+Microservices communicate with each other using various communication protocols and patterns. Some common methods are:
+
+REST (Representational State Transfer): This is the most common way of communication between microservices. 
+Each service exposes a RESTful API that other services can use to access its resources.
+
+Messaging: Microservices can also communicate with each other using a messaging system like RabbitMQ or Kafka. 
+This is useful when services need to communicate asynchronously, such as in a publish-subscribe pattern.
+
+RPC (Remote Procedure Call): In RPC, one microservice calls another service's function as if it were a local function. 
+This pattern is useful when services need to communicate synchronously.
+
+Service Mesh: A service mesh is a dedicated infrastructure layer that provides service-to-service communication 
+between microservices. It handles service discovery, load balancing, and other communication-related tasks.
+
+Event-driven: Microservices can communicate with each other through events or messages. When an event occurs in one service, 
+it can trigger a reaction in another service.
+
+Overall, the choice of communication protocol and pattern depends on the specific needs of the microservice architecture and 
+ the nature of the communication between the services.
+
+Q3- how two pod communicates each other in microservice?
+In a microservice architecture, communication between pods happens through the Kubernetes networking model. 
+Kubernetes provides a flat network where every pod is assigned a unique IP address. This IP address is used by o
+ther pods to communicate with it.
+
+There are two main ways that pods can communicate with each other:
+
+Using Service Discovery: Kubernetes provides a built-in service discovery mechanism using Kubernetes Services. 
+Services act as a stable endpoint for a set of pods that provide the same functionality. A service can have a 
+stable IP address and DNS name, which other pods can use to communicate with it. When a pod communicates with a service, 
+Kubernetes handles the routing to the appropriate pod(s) behind the service.
+
+Using Pod IP Addresses: Pods can also communicate with each other directly using their IP addresses. 
+Each pod has a unique IP address within the Kubernetes cluster, which can be used by other pods to communicate with it. 
+However, using pod IP addresses is less recommended because pods can be dynamically created or destroyed, 
+and their IP addresses can change. Using service discovery is generally more stable and scalable.
+
+Overall, communication between pods in a microservice architecture relies on Kubernetes networking 
+and service discovery mechanisms. These mechanisms provide a robust and scalable way for pods to 
+communicate with each other, regardless of their physical location within the cluster.
+
+Q4- how two pod communicates with each other in docker?
+In Docker, communication between two pods can be achieved through networking. 
+When you create a Docker container, you can specify a network to attach it to, 
+which allows it to communicate with other containers on the same network.
+
+Here are the steps for two pods to communicate with each other in Docker:
+
+Create a network: First, create a network for your pods to communicate on using the docker network create command. 
+For example, you could create a network called my-network with the following command:
+
+-- docker network create my-network
+
+Run the pods: Start the two pods that need to communicate on the same network using the --network flag to attach 
+them to the network you just created. For example, you could run two instances of an image called my-image with the following command:
+
+docker run --name pod1 --network my-network my-image
+docker run --name pod2 --network my-network my-image
+
+Verify connectivity: Now that the pods are on the same network, they can communicate with each other 
+using their container names as hostnames. For example, if pod1 needs to communicate with pod2 over port 8080, 
+it can use the URL http://pod2:8080. You can verify that the pods can communicate by running a ping command 
+from one container to the other. For example, run the following command in pod1 to ping pod2:
+
+If the ping is successful, then the pods are able to communicate with each other.
+
+In summary, two pods can communicate with each other in Docker by attaching them to the same network and using their container names as hostnames.
+
+Q5-How services are authorized in microservice?
+
+Authorization in microservices is typically handled using a combination of authentication and 
+access control mechanisms. Here are some common approaches:
+
+JWT (JSON Web Tokens): A JWT is a JSON-based access token that is issued by an authentication server 
+and includes information about the user and their permissions. Each microservice can verify the token 
+and use the information to authorize requests.
+
+OAuth2: OAuth2 is an industry-standard protocol for authorization that allows a user to grant a third-party 
+application access to their resources without sharing their credentials. Each microservice can 
+verify the access token and use the information to authorize requests.
+
+Role-based access control (RBAC): RBAC is a model for access control that assigns roles to users and grants 
+permissions based on those roles. Each microservice can verify the user's role and use it to authorize requests.
+
+Attribute-based access control (ABAC): ABAC is a model for access control that uses attributes to define access policies. 
+Each microservice can verify the attributes of the request and use them to authorize requests.
+
+Policy-based access control: Policy-based access control allows the definition of access policies based on a 
+combination of attributes, roles, and other factors. Each microservice can verify the request against the policies 
+and use them to authorize requests.
+
+Overall, the choice of authorization mechanism depends on the specific needs of the microservice architecture 
+and the nature of the access control policies. It's essential to have a consistent and secure approach to 
+authorization across all microservices to ensure the overall security of the system.
+
+Q6- How OAuth2 works ?
+
+OAuth2 is an industry-standard protocol for authorization that allows a user to grant a 
+third-party application access to their resources without sharing their credentials. Here's how it works:
+
+The user attempts to access a resource protected by the OAuth2 provider (such as a web application or an API).
+
+The user is redirected to the OAuth2 provider's authorization server, where they are prompted to log in and 
+grant permission for the application to access their resources.
+
+If the user grants permission, the authorization server issues an access token to the application. 
+This access token is a long-lived token that the application can use to access the user's resources.
+
+The application includes the access token in requests to the resource server, which then validates the 
+token and provides access to the requested resource.
+
+There are several roles involved in the OAuth2 protocol:
+-------------------------------------------------------------
+
+Resource Owner: The user who owns the resource and is granting access to the application.
+
+Client: The third-party application that wants to access the user's resources.
+
+Authorization Server: The server that authenticates the user and issues the access token.
+
+Resource Server: The server that hosts the protected resources and validates the access token.
+
+OAuth2 supports several grant types, including:
+----------------------------------------------------
+
+Authorization Code Grant: The most common grant type, where the application receives an authorization 
+code that it exchanges for an access token.
+
+Implicit Grant: A simplified grant type where the access token is issued directly to the application.
+
+Client Credentials Grant: A grant type where the application exchanges its client credentials for an access token.
+
+Resource Owner Password Credentials Grant: A grant type where the user provides their username and password 
+directly to the application, which then exchanges them for an access token.
+
+Overall, OAuth2 is a secure and flexible protocol that allows users to grant third-party applications access to 
+their resources without sharing their credentials.
+
+
+Q7- How OAuth2 and JWT are implemented together?
+
+OAuth2 and JWT are often used together to provide secure authentication and authorization in distributed systems. 
+Here's how they can be implemented together:
+
+The user logs in to the client application, which sends the user's credentials to the authorization server.
+
+The authorization server authenticates the user and issues an access token, which can be a JWT. 
+The JWT contains information about the user's identity and permissions, as well as an expiration time.
+
+The client application includes the JWT in requests to the resource server, which then validates the token 
+and provides access to the requested resource.
+
+If the JWT expires, the client application can request a new access token by sending a refresh token to the authorization server.
+
+The key benefits of using JWT with OAuth2 are:
+-------------------------------------------------
+Scalability: JWTs can be used to reduce the number of requests to the authorization server, 
+which can improve the scalability of the system.
+
+Decentralization: JWTs can be verified locally by the resource server, which reduces the dependency 
+on the authorization server and can improve performance.
+
+Security: JWTs can be signed and encrypted to ensure their integrity and confidentiality.
+
+In summary, OAuth2 and JWT can be used together to provide a secure and scalable authentication and 
+authorization mechanism in distributed systems. By using JWTs, the system can reduce the number of 
+requests to the authorization server and improve the overall performance and scalability of the system.

@@ -1,0 +1,22 @@
+What is a microservice and how does it differ from a monolithic architecture?
+What are some benefits of using microservices?
+Can you describe how a microservices architecture can be designed and deployed?
+How do microservices communicate with each other?
+What are some common challenges in managing a microservices architecture, and how can they be addressed?
+Can you describe how you would approach testing and monitoring a microservices-based application?
+What is service discovery and how is it used in a microservices architecture?
+Can you discuss how security concerns can be addressed in a microservices-based system?
+How can a microservices architecture be scaled horizontally?
+Can you provide an example of a real-world application that uses microservices, and how they are implemented in that application?
+
+
+Have you ever worked on a project that used microservices? Can you describe your role and responsibilities on that project, and any challenges you faced?
+Can you provide an example of a specific microservice you have developed, and walk me through its architecture and functionality?
+Have you ever had to troubleshoot issues in a microservices-based application? How did you approach the problem, and what tools or techniques did you use to resolve it?
+Have you worked with containerization technologies like Docker or Kubernetes in the context of microservices? Can you describe how you used these tools and any benefits or challenges you encountered?
+Have you ever had to integrate multiple microservices together? How did you handle dependencies and ensure seamless communication between the services?
+Can you discuss a time when you had to implement a new feature or functionality in a microservices-based system? What was your approach and how did you ensure the new feature was scalable and maintainable?
+Have you worked with any API gateway solutions in the context of microservices? Can you describe how you used the gateway and any benefits or drawbacks you experienced?
+Have you ever had to manage and deploy multiple microservices across different environments (e.g. dev, test, production)? Can you describe your approach and any tools or techniques you used to streamline the process?
+Have you ever encountered issues related to data consistency or management in a microservices architecture? How did you address those issues?
+Can you describe a time when you had to scale a microservices-based application to handle increased traffic or demand? What was your approach, and were there any challenges you encountered?

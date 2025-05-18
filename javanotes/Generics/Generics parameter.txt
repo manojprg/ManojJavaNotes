@@ -1,0 +1,35 @@
+Generics in Java allow you to create classes, interfaces, and methods that operate on parameters whose types 
+are specified at the time of use. There are several parameters used in generics to enhance type safety and reusability. 
+Here are some of the commonly used parameters in generics:
+
+1. **Type Parameter (T):**
+   - The most common parameter in generics is the type parameter, denoted by a single uppercase 
+   letter such as T, E, K, or V. It represents a placeholder for the actual type that will be used 
+   when an instance of the generic class or method is created.
+
+2. **Wildcard Parameter (?):**
+   - Wildcard parameter, denoted by `?`, represents an unknown type. It is often used in situations 
+   where you want to accept any type or when you want to specify constraints on a type without knowing the actual type.
+
+3. **Upper Bounded Wildcard (<? extends T>):**
+   - This parameter restricts the unknown type to be a subtype of a specified type (T). It allows you to accept 
+   any type that is a subclass of T or T itself.
+
+4. **Lower Bounded Wildcard (<? super T>):**
+   - This parameter restricts the unknown type to be a supertype of a specified type (T). It allows you to 
+   accept any type that is a superclass of T or T itself.
+
+5. **Type Erasure Parameter:**
+   - Type erasure parameter refers to the fact that generic type information is erased at runtime due to type erasure in Java. 
+   It's not directly accessible during runtime but is used by the compiler for type checking at compile time.
+
+6. **Generic Method Parameter:**
+   - Generics can also be applied to methods, where type parameters are defined before the return type of the method. 
+   This allows methods to operate on generic types.
+
+7. **Generic Constructor Parameter:**
+   - Similar to methods, constructors can also have generic type parameters. This allows you to create generic classes 
+   with constructors that can accept parameters of the generic type.
+
+These parameters are fundamental to the flexibility and type safety provided by generics in Java. They allow developers 
+to create reusable and type-safe code that can work with different types without sacrificing safety or performance.

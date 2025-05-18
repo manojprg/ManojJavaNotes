@@ -1,0 +1,68 @@
+
+In Kafka, `fetch.min.bytes` and `fetch.max.wait.ms` are important consumer configuration settings that control 
+how messages are fetched from the broker, which can affect both latency and throughput:
+
+1. `fetch.min.bytes`
+
+   - Purpose: This setting specifies the minimum amount of data (in bytes) that the broker should collect 
+   before sending a response to the consumer.
+   - Effect: 
+      - If there is less data than specified in `fetch.min.bytes`, the broker will wait until enough data 
+	  accumulates before sending a response. This can reduce the number of requests by batching messages, 
+	  which is efficient for high-throughput scenarios.
+      - Setting this to a larger value (e.g., 1MB or more) allows for better throughput since more data will
+	  be processed per fetch, reducing the overall fetch request rate. However, it may increase latency, as 
+	  the broker may need more time to gather the specified amount of data.
+   - Use Case: 
+      - Low Latency: For low-latency needs, keep this value low (e.g., 1 byte or 1KB) so the broker responds 
+	  as soon as there is data.
+      - High Throughput: For batch processing, increase this value to optimize network and I/O usage, especially 
+	  for consumers that can afford slight delays.
+
+2. `fetch.max.wait.ms`
+
+   - Purpose: This setting specifies the maximum amount of time (in milliseconds) that the broker will wait to 
+   collect the specified `fetch.min.bytes` before returning a response to the consumer.
+   - Effect:
+      - If the broker cannot accumulate enough data to meet `fetch.min.bytes` within the time set by `fetch.max.wait.ms`, 
+	  it will return whatever data is available at the end of the wait period.
+      - Lower values (e.g., 100ms) will ensure more frequent responses but can increase the number of smaller fetches, 
+	  while higher values (e.g., 500ms or more) allow the broker more time to accumulate data, reducing request 
+	  frequency and potentially improving throughput.
+   - Use Case:
+      - Low Latency: Use a lower wait time to receive messages as quickly as possible, ideal for near-real-time processing.
+      - Batch Processing: Increase the wait time to allow for more data accumulation, improving throughput for 
+	  batch consumers that can handle a slight delay.
+
+Example Use of `fetch.min.bytes` and `fetch.max.wait.ms` Together
+---------------------------------------------------------------------
+For a consumer application prioritizing **high throughput** over low latency, set `fetch.min.bytes` to a 
+higher value (e.g., 1MB) and `fetch.max.wait.ms` to 500ms. This configuration ensures that each response 
+fetches larger batches of data, even if it means waiting a bit longer.
+
+For real-time processing, use a low `fetch.min.bytes` (e.g., 1KB or even 1 byte) and a `fetch.max.wait.ms` 
+of around 100ms to reduce delay in receiving new messages as they arrive on the broker.
+
+
+Throughput vs latency:
+--------------------------- 
+are performance metrics often used to measure the efficiency of data systems like Kafka, as well as networks, 
+databases, and other computing systems. Each metric has a distinct meaning and importance depending on the 
+system requirements.
+
+Throughput:
+   - **Definition**: Throughput is the amount of data processed by a system in a given time period. It is often 
+   measured in messages per second, requests per second, or bytes per second.
+   - **Importance**: High throughput indicates that a system can handle large volumes of data or requests, 
+   which is critical for applications processing a lot of data in real time, like analytics pipelines or transaction systems.
+   - **Example in Kafka**: If a Kafka consumer reads 1,000 messages per second from a topic, this rate is 
+   the throughput. Optimizing throughput often involves batching data and reducing the frequency of individual requests.
+
+Latency:
+   - **Definition**: Latency is the time delay experienced in the processing or delivery of data from when a 
+   request is made to when it is fulfilled. Latency is often measured in milliseconds (ms) or seconds.
+   - **Importance**: Low latency is crucial for applications that require immediate processing or near-real-time 
+   responses, like live trading platforms or interactive systems.
+   - **Example in Kafka**: Latency in Kafka would be the time it takes for a message to go from producer to broker 
+   and finally to a consumer. Minimizing latency involves making sure that data flows as quickly as possible through
+   each part of the pipeline.

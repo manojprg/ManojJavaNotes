@@ -1,0 +1,86 @@
+
+@RestControllerAdvice and @ControllerAdvice are annotations used in Spring Framework for handling exceptions 
+globally in Spring MVC controllers.
+
+@ControllerAdvice: This annotation is used to define a global controller advice for Spring MVC controllers. 
+It allows you to handle exceptions across the whole application, including both traditional web MVC controllers 
+and RESTful controllers. When you use @ControllerAdvice, Spring automatically detects it during the component 
+scanning process and applies it to all controllers.
+
+@RestControllerAdvice: This is a specialization of @ControllerAdvice specifically designed for RESTful web services. 
+It combines @ControllerAdvice and @ResponseBody, meaning that it provides advice only for controllers that are 
+annotated with @RestController or methods annotated with @ResponseBody. It's particularly useful in scenarios 
+where you want to handle exceptions and provide a response in JSON or XML format, common in RESTful services.
+
+In summary, @ControllerAdvice is more general and applies to all controllers, including both traditional MVC and 
+RESTful controllers, while @RestControllerAdvice is specifically for RESTful controllers, allowing you to provide 
+advice tailored for handling exceptions in a RESTful manner.
+
+@Slf4j
+@RestController
+@ControllerAdvice
+@RequestMapping(AppConstants.CONFIG_CONTROLLER)
+@Validated
+public class CommitDayConfController {
+
+  @Autowired
+  private CommitDayConfReqValidator commitDayConfReqValidator;
+
+  @Autowired
+  private CommitDayConfService commitDayConfService;
+
+  /**
+   * This is the controller method for saving new Commitment Day configuration
+   * 
+   * @param commitRequest
+   * @param headers
+   * @return
+   */
+  @PostMapping(value = "/prequalCommitDayConfig", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<ResponseDTO> saveCommitDayConf(@Valid @RequestBody CommitDayRequestDTO commitRequest,
+      @RequestHeader HttpHeaders headers) {
+
+    log.trace("Inside CommitDayConfController.saveCommitDayConf method.");
+    log.debug("Request saveCommitDayConf method.commitRequest= {}", commitRequest);
+
+    commitDayConfReqValidator.validateCommitDayRequest(commitRequest);
+
+    return ResponseUtil.setResponse(commitDayConfService.saveCommitDayConf(commitRequest, headers), HttpStatus.CREATED);
+
+  }
+  
+  //ExceptionHandler class
+  
+@ControllerAdvice
+@Slf4j
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class PrequalControllerExceptionHandler {
+  /**
+   * This method handles HttpMessageNotReadableException.class, when request body
+   * not found
+   *
+   * @param exception
+   * @return ResponseEntity<Response>
+   */
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<ResponseDTO> handleMethodArgumentNotValidException(
+    HttpMessageNotReadableException exception) {
+    log.error("Exception Handler for HttpMessageNotReadableException : {}", exception.getMessage());
+    return ResponseUtil.setErrorResponse(exception.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+  
+  }
+  
+  //@Validated @Valid and DTO vallidation
+  
+  public class CommitDayRequestDTO implements Serializable {
+    private static final long serialVersionUID = 9096158972126549499L;
+    private @NotEmpty(message = "contractType is mandatory ) @Size(max = 3,min = 1,message = "contractType must not exceed 3")
+	String contractType;
+    @Min(value = 1L,message = "noOfSites should greater or equal to 1")@Max(value = 999L,message = "noOfSites should less or equal to 999")
+    private @NotNull(
+    message = "noOfSites is mandatory") 
+	Long noOfSites;
+
+
+}

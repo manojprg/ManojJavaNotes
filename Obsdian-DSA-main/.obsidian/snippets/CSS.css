@@ -1,0 +1,22 @@
+/* Force variable color to black in code blocks */
+.markdown-preview-view code[class*="language-java"] span:not(.token) {
+  color: black !important;
+}
+
+/* Optional: Style tokens */
+.token.keyword {
+  color: #0000FF !important; /* Blue */
+}
+
+.token.comment {
+  color: #008000 !important; /* Green */
+  font-style: italic;
+}
+
+.token.string {
+  color: #A31515 !important; /* Red-ish */
+}
+
+.token.function {
+  color: #795E26 !important;
+}

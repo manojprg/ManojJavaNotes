@@ -1,0 +1,79 @@
+Reference Youtube Link: https://www.youtube.com/watch?v=CTCAo89fcQw
+
+As we know that, in order to maintain consistency in a database, it follows ACID properties. Among these four properties 
+(Atomicity, Consistency, Isolation and Durability) Isolation determines how transaction integrity is visible to other users
+and systems. It means that a transaction should take place in a system in such a way that it is the only transaction that 
+is accessing the resources in a database system.
+Isolation levels define the degree to which a transaction must be isolated from the data modifications made by any other 
+transaction in the database system. A transaction isolation level is defined by the following phenomena 
+
+3 Transactional annomalies exists:
+----------------------------------
+Dirty Reads - Suppose two transactions - Transaction A and Transaction B are running concurrently. 
+If Transaction A modifies a record but not commits it. Transaction B reads this record but then Transaction A again rollbacks the changes 
+for the record and commits it. So Transaction B has a wrong value.
+
+current productprice is 500 of product whose id is 123
+
+Transaction-1 -> update productprice= 1000 from product where id=123.
+Transaction-2 -> select productprice from product where id=123.
+
+Here, we have 2 transactions and when transaction 1 tries to update the productprice and but not yet not commited and rollbacks the update
+and simultaneoulsy another transaction 2 picks the same record with wrong data. this is dirty reads.
+
+Non-Repeatable Reads - Suppose two transactions - Transaction A and Transaction B are running concurrently. 
+If Transaction A reads some records. Transaction B modifies these records before transaction A has been committed. 
+So if Transaction A again reads these records they will be different. So same select statements result in different existing records.
+
+current productprice is 500 of product whose id is 123
+Transaction-1 -> select productprice from product where id=123.
+Transaction-2 -> update productprice= 1000 from product where id=123.
+Transaction-1 -> select productprice from product where id=123.
+
+Here transaction 1 reads a product with price 500 whose id is 123 and another transaction 2 update the same record with 1000 and commits.
+and when transaction 1 again reads the same product, they found a change in productprice for the same product. this non-repeatable reads.
+
+Phantom Reads - Suppose two transactions - Transaction A and Transaction B are running concurrently. If Transaction A reads some records. 
+Transaction B adds more such records before transaction A has been committed. So if Transaction A again reads there will be more records than 
+the previous select statement. So same select statements result in different number records to be displayed as new records also get added.
+
+Transaction-1 -> select * from product where productprice>2000.
+
+Transaction-2 -> insert into product having productprice= 5000 in product table.
+
+Transaction-1 -> select * from product where productprice>2000.
+
+Here transaction 1 reads a product with price greater than 2000 and lets suppose gets total of 5 records and 
+another transaction 2 inserts a new product with productprice=5000 which satisfies the where condition of select query and commits 
+and again the transaction 1 query to get products which are greater than 2000 are 6 records this time. 
+1 new records got added same query. This is similar to Non-Repeatable Reads. it deals with ranges in where clause
+and when transaction 1 again reads the same product, they found a change in productprice for the same product. this non-repeatable reads.
+
+To resolve these problems we use different isol level:
+
+1.SERIALIZABLE
+If two transactions are executing concurrently then it is as if the transactions get executed serially i.e 
+the first transaction gets committed only then the second transaction gets executed. This is total isolation.
+So a running transaction is never affected by other transactions. However this may cause issues as performance 
+will be low and deadlock might occur.
+
+2.REPEATABLE_READ
+If two transactions are executing concurrently - till the first transaction is committed the existing records cannot be 
+changed by second transaction but new records can be added. After the second transaction is committed, the new added 
+records get reflected in first transaction which is still not committed. For MySQL the default isolation level is REPEATABLE_READ.
+However the REPEATABLE READ isolation level behaves differently when using mysql. When using MYSQL we are not able to see the newly
+added records that are committed by the second transaction.
+It will create all the 1 problems (Phantom Reads). performance is better than above isolation level.
+
+3.READ_COMMITTED
+If two transactions are executing concurrently - before the first transaction is committed the existing records can be changed as
+well as new records can be changed by second transaction. After the second transaction is committed, the newly added and also updated
+records get reflected in first transaction which is still not committed.
+It will create all the 2 problems (Non-Repeatable Reads,Phantom Reads). performance is better than above 2 isolation level.
+
+4.READ_UNCOMMITTED
+If two transactions are executing concurrently - before the first transaction is committed the existing records can be changed as well 
+as new records can be changed by second transaction. Even if the second transaction is not committed the newly added and also updated
+records get reflected in first transaction which is still not committed.
+It will create all the 3 problems (Dirty Reads,Non-Repeatable Reads,Phantom Reads). performance is better than above 3 isolation level.
+

@@ -1,0 +1,179 @@
+{
+  "main": {
+    "id": "2d6c5e1d71d8468f",
+    "type": "split",
+    "children": [
+      {
+        "id": "0723742593f5d904",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0f243ea17e0832b1",
+            "type": "leaf",
+            "state": {
+              "type": "txt",
+              "state": {
+                "file": "Collections/Fail-safe arraylist.txt"
+              },
+              "icon": "lucide-file",
+              "title": "Fail-safe arraylist"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9a60e5d632d48105",
+    "type": "split",
+    "children": [
+      {
+        "id": "bb2efda7e74c23e4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "99f31daefbe56b6a",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "3b3a0d3dfeee6384",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "d3172739c2d4f930",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "fadc31213b9e21c1",
+    "type": "split",
+    "children": [
+      {
+        "id": "7db775b8944b7350",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8ef9d927a99fb92e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Collections/Fail-safe arraylist.txt",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Fail-safe arraylist"
+            }
+          },
+          {
+            "id": "91a6212f945b9263",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Collections/Fail-safe arraylist.txt",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Fail-safe arraylist"
+            }
+          },
+          {
+            "id": "a64931774aa95341",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "42c237bff29ca43c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Collections/Fail-safe arraylist.txt",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Fail-safe arraylist"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "0f243ea17e0832b1",
+  "lastOpenFiles": [
+    "Collections/Arraylist vs Vector.txt",
+    "Collections/binaryTree vs BST.txt",
+    "Collections/Custom - hashmap 2.txt",
+    "Collections/arrayList vs linkedList.txt",
+    "Collections/14 Collections Frame Work.pdf",
+    "architecture/system design interview.pdf",
+    "architecture/Master+Microservices+with+SpringBoot,Docker,Kubernetes.pdf"
+  ]
+}
