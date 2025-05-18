@@ -178,8 +178,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a58a4ba2762fb71e",
+  "active": "52852408a7306af2",
   "lastOpenFiles": [
+    "Obsdian-DSA-main/Token.md",
+    "Obsdian-DSA-main/Untitled.canvas",
+    "Welcome.md",
     "Obsdian-DSA-main/Algorithms/Binary Search Algo.md",
     "javanotes/Memory Management/Java (JVM) Memory Model - Memory Management in Java - JournalDev_files/webfontloader.min.js.download",
     "javanotes/Memory Management/Java (JVM) Memory Model - Memory Management in Java - JournalDev_files/wp-embed.min.js.download",
@@ -200,7 +203,6 @@
     "javanotes/Memory Management/Java (JVM) Memory Model - Memory Management in Java - JournalDev_files/usync.js.download",
     "javanotes/Memory Management/Java (JVM) Memory Model - Memory Management in Java - JournalDev_files/usync.html",
     "javanotes/Memory Management/Java (JVM) Memory Model - Memory Management in Java - JournalDev_files/usync(1).html",
-    "javanotes/Memory Management/Java (JVM) Memory Model - Memory Management in Java - JournalDev_files/usersync.html",
-    "Welcome.md"
+    "javanotes/Memory Management/Java (JVM) Memory Model - Memory Management in Java - JournalDev_files/usersync.html"
   ]
 }
